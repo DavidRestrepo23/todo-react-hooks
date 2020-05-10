@@ -1,13 +1,5 @@
 const initialState = {
-  tasks: [
-    { name: "Crear Proyecto", state: true, proyectId: 1, id:"b9c6ee7a-65ec-11ea-bc55-0242ac130003" },
-    { name: "Crear Base de datos", state: true, proyectId: 2, id:"de61da1a-65ec-11ea-bc55-0242ac130003" },
-    { name: "Crear API", state: false, proyectId: 3, id:"e31cde88-65ec-11ea-bc55-0242ac130003" },
-    { name: "Conectar API con React", state: false, proyectId: 4, id:"e9c4b062-65ec-11ea-bc55-0242ac130003" },
-    { name: "Crear Base de datos", state: true, proyectId: 2, id:"ee0522a6-65ec-11ea-bc55-0242ac130003" },
-    { name: "Crear API", state: false, proyectId: 3, id:"f27d5286-65ec-11ea-bc55-0242ac130003" },
-    { name: "Conectar API con React", state: false, proyectId: 3, id:"f9225e24-65ec-11ea-bc55-0242ac130003" },
-  ],
+  tasks: [],
   errorEmptyTask: false,
   currentTask: null
 };
@@ -17,8 +9,13 @@ export function TasksReducer(state = initialState, action) {
     case "ADD_TASK":
       return {
         ...state,
-        tasks: [...state.tasks, action.task],
+        tasks: [...state.tasks, action.payload],
         errorEmptyTask: false
+      }
+    case "GET_TASKS":
+      return {
+        ...state,
+        tasks: state.tasks.filter(item => item.proyect_id === action.payload)
       }
     case "VALIDATE_TASK":
       return {
@@ -35,11 +32,17 @@ export function TasksReducer(state = initialState, action) {
         ...state,
         tasks: state.tasks.map(task => task.id === action.task.id ? action.task : task)
       }
-    case "CURRET_TASK":
+    case "CURRENT_TASK":
       return {
         ...state,
         currentTask: action.task
 
+      }
+    case "UPDATE_TASK":
+      return {
+        ...state,
+        tasks: state.tasks.map(task => task.id === action.task.id ? action.task : task),
+        currentTask: null,
       }
     default:
       return state;

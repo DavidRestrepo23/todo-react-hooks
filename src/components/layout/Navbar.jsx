@@ -1,15 +1,17 @@
 import React from 'react';
 
-const Navbar = () => {
-    return ( 
+const Navbar = (props) => {
+    return (
         <header className="app-header">
-            <p className="name-user">Hi <span>David Restrepo</span></p>
+            <p className="name-user">Hi, <span>{props.user ? props.user.name : null}</span></p>
 
             <nav className="nav-principal">
-                <a href="#!">Close session</a>
+                <button className="btn btn-blank" onClick={(e) => props.logout()}>
+                    <span className="close">Close session</span>
+                </button>
             </nav>
         </header>
-     );
+    );
 }
- 
+
 export default Navbar;

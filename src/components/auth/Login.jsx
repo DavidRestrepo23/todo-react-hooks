@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const Login = ({handleSubmit, handleInputFormLogin,handleTooglePassword, togglePassword, formInfo }) => {
-  
+const Login = ({ handleSubmit, handleInputFormLogin, handleTooglePassword, togglePassword, formInfo, alert }) => {
+
   return (
     <div className="form-user">
+      {alert ? <div className={`alert ${alert.category}`}>{alert.msg}</div> : null}
       <div className="content-form shadow-dark">
         <h1>Sign in</h1>
         <form onSubmit={handleSubmit}>
@@ -33,8 +34,8 @@ const Login = ({handleSubmit, handleInputFormLogin,handleTooglePassword, toggleP
               {togglePassword === true ? (
                 <i className="fas fa-eye-slash"></i>
               ) : (
-                <i className="fas fa-eye"></i>
-              )}
+                  <i className="fas fa-eye"></i>
+                )}
             </span>
           </div>
           <div className="field-form">

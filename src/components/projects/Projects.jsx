@@ -4,12 +4,13 @@ import Navbar from "../layout/Navbar";
 import ListTaskContainer from '../../containers/tasks/ListTaskContainer';
 import FormTaskContainer from "../../containers/tasks/FormTaskContainer";
 
-const Projects = () => {
+const Projects = ({ user, logout }) => {
+
   return (
     <div className="content-app">
       <Sidebar />
       <div className="section-principal">
-        <Navbar />
+        <Navbar user={user} logout={logout} />
         <main>
           <FormTaskContainer />
           <div className="content-tasks">

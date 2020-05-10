@@ -19,7 +19,7 @@ const FormTask = props => {
           <input
             type="submit"
             className="btn btn-primary btn-submit btn-block"
-            value="Add Task"
+            value={props.currentTask ? "Edit Task" : "Add Task"}
           />
         </div>
       </form>

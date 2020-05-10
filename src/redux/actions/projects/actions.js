@@ -4,9 +4,24 @@ import {
   ADD_PROJECT,
   SHOW_ERROR,
   CURRENT_PROJECT,
-  DELETE_PROJECT
+  DELETE_PROJECT,
+  ERROR_PROJECT
 } from "./actionTypes";
-import uuid from "uuid";
+import clientAxios from '../../../config/axios';
+
+
+/**
+ * create alert
+ * @param {*} data 
+ */
+const messages = data => {
+
+  return alert = {
+    msg: data.msg,
+    category: data.category
+  };
+
+}
 
 export function activeFormStatus() {
   return {
@@ -14,20 +29,26 @@ export function activeFormStatus() {
   };
 }
 
-export function getProjects(projects) {
-  return {
-    type: GET_PROJECTS,
-    projects
-  };
+export function getProjects() {
+  return async (dispatch) => {
+    await clientAxios.get('/api/projects').then(response => {
+      dispatch({ type: GET_PROJECTS, payload: response.data });
+    }).catch(error => {
+      let alert = messages({ msg: error.response.data.msg, category: 'alert-error' });
+      dispatch({ type: ERROR_PROJECT, payload: alert });
+    });
+  }
 }
 
 export function addProject(project) {
-  project.id = uuid.v4();
-
-  return {
-    type: ADD_PROJECT,
-    project
-  };
+  return async (dispatch) => {
+    await clientAxios.post('/api/projects', project).then(response => {
+      dispatch({ type: ADD_PROJECT, payload: response.data });
+    }).catch(error => {
+      let alert = messages({ msg: error.response.data.msg, category: 'alert-error' });
+      dispatch({ type: ERROR_PROJECT, payload: alert });
+    });
+  }
 }
 
 export function showErrorMessage() {
@@ -44,8 +65,12 @@ export function currentProjectActive(projectId) {
 }
 
 export function deleteProject(projectId) {
-  return {
-    type: DELETE_PROJECT,
-    projectId
-  };
+  return async (dispatch) => {
+    await clientAxios.delete(`/api/projects/${projectId}`).then(response => {
+      dispatch({ type: DELETE_PROJECT, payload: response.data });
+    }).catch(error => {
+      let alert = messages({ msg: error.response.data.msg, category: 'alert-error' });
+      dispatch({ type: ERROR_PROJECT, payload: alert });
+    });
+  }
 }

@@ -1,16 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { addTask, validateTask } from "../../redux/actions/tasks/actions";
+import { addTask, validateTask, updateTask } from "../../redux/actions/tasks/actions";
 import FormTask from "../../components/tasks/FormTask";
-import uuid from "uuid";
 
-const ListTaskContainer = props => {
+
+const FormTaskContainer = props => {
+
+
+
   const [task, setTask] = useState({
     name: "",
     state: false
   });
 
-  const { name } = task;
+  useEffect(() => {
+    if (props.currentTask !== null) {
+      setTask(props.currentTask);
+    } else {
+      setTask({
+        name: ''
+      });
+    }
+  }, [props.currentTask]);
 
   const handleChangeForm = e => {
     setTask({
@@ -22,18 +33,22 @@ const ListTaskContainer = props => {
   const handleSubmitForm = e => {
     e.preventDefault();
 
-    if (name.trim() === "") {
+    if (task.name.trim() === "") {
       props.validateTask();
       return;
     }
 
-    task.proyectId = props.currentProject[0].id;
-    task.id = uuid.v4();
+    if (props.currentTask === null) {
+      task.proyect_id = props.currentProject[0]._id;
+      props.addTask(task);
+    } else {
+      props.updateTask(task);
+    }
 
-    props.addTask(task);
     setTask({
       name: ""
     });
+
   };
 
   if (props.currentProject != null) {
@@ -43,7 +58,8 @@ const ListTaskContainer = props => {
         handleSubmitForm={handleSubmitForm}
         handleChangeForm={handleChangeForm}
         errorEmptyTask={props.errorEmptyTask}
-        task={name}
+        task={task.name}
+        currentTask={props.currentTask}
       />
     );
   }
@@ -53,17 +69,19 @@ const ListTaskContainer = props => {
 
 const mapStateToProps = state => {
   const { currentProject } = state.ProjectsReducer;
-  const { errorEmptyTask } = state.TasksReducer;
+  const { errorEmptyTask, currentTask } = state.TasksReducer;
 
   return {
     currentProject,
-    errorEmptyTask
+    errorEmptyTask,
+    currentTask
   };
 };
 
 const mapDispatchToProps = {
   addTask,
-  validateTask
+  validateTask,
+  updateTask
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListTaskContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(FormTaskContainer);

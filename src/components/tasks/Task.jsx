@@ -8,7 +8,7 @@ const Task = ({
 }) => {
   return (
     <li className="task shadow">
-      <p className={task.state === false ? "task-strikes" : null}>
+      <p className={task.state === true ? "task-strikes" : null}>
         {task.name}
       </p>
 
@@ -22,14 +22,14 @@ const Task = ({
             Complete
           </button>
         ) : (
-          <button
-            type="button"
-            onClick={e => handleChangeStatusTask(task)}
-            className="incomplete"
-          >
-            Incomplete
+            <button
+              type="button"
+              onClick={e => handleChangeStatusTask(task)}
+              className="incomplete"
+            >
+              Incomplete
           </button>
-        )}
+          )}
       </div>
       <div className="actions">
         <button

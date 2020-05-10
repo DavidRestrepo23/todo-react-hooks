@@ -1,13 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const NewAccount = ({handleInputFormLogin, handleTooglePassword, togglePassword, handleSubmit }) => {
+const NewAccount = ({ handleInputFormLogin, handleTogglePassword, togglePassword, handleSubmit, alert, validation }) => {
   return (
     <div className="form-user">
+      {alert ? <div className={`alert ${alert.category}`}>{alert.msg}</div> : null}
       <div className="content-form shadow-dark">
         <h1>Sign up</h1>
         <form
-            onSubmit={handleSubmit}
+          onSubmit={handleSubmit}
         >
           <div className="field-form">
             <label htmlFor="name">Name</label>
@@ -29,23 +30,27 @@ const NewAccount = ({handleInputFormLogin, handleTooglePassword, togglePassword,
               onChange={handleInputFormLogin}
             />
           </div>
-          <div className="field-form toggle-password">
-            <label htmlFor="password"> Password </label>
-            <input
-              type={togglePassword === true ? "text" : "password"}
-              id="password"
-              name="password"
-              placeholder="Your password"
-              onChange={handleInputFormLogin}
+          <div className="content-input-form">
+            <div className="field-form toggle-password">
+              <label htmlFor="password"> Password </label>
+              <input
+                type={togglePassword === true ? "text" : "password"}
+                id="password"
+                name="password"
+                placeholder="Your password"
+                onChange={handleInputFormLogin}
 
-            />
-            <span onClick={handleTooglePassword}>
-              {togglePassword === true ? (
-                <i className="fas fa-eye-slash"></i>
-              ) : (
-                <i className="fas fa-eye"></i>
-              )}
-            </span>
+              />
+              <span onClick={handleTogglePassword}>
+                {togglePassword === true ? (
+                  <i className="fas fa-eye-slash"></i>
+                ) : (
+                    <i className="fas fa-eye"></i>
+                  )}
+              </span>
+            </div>
+            {validation ? <small>{validation}</small> : null}
+
           </div>
           <div className="field-form toggle-password">
             <label htmlFor="confirmed-password"> Confirm Password </label>
@@ -56,12 +61,12 @@ const NewAccount = ({handleInputFormLogin, handleTooglePassword, togglePassword,
               placeholder="Repeat password"
               onChange={handleInputFormLogin}
             />
-            <span onClick={handleTooglePassword}>
+            <span onClick={handleTogglePassword}>
               {togglePassword === true ? (
                 <i className="fas fa-eye-slash"></i>
               ) : (
-                <i className="fas fa-eye"></i>
-              )}
+                  <i className="fas fa-eye"></i>
+                )}
             </span>
           </div>
           <div className="field-form">

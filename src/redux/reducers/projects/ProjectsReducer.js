@@ -2,7 +2,8 @@ const initialState = {
   projects: [],
   activeForm: false,
   showError: false,
-  currentProject: null
+  currentProject: null,
+  message: null
 };
 
 export function ProjectsReducer(state = initialState, action) {
@@ -15,12 +16,12 @@ export function ProjectsReducer(state = initialState, action) {
     case "GET_PROJECTS":
       return {
         ...state,
-        projects: action.projects
+        projects: action.payload.projects
       };
     case "ADD_PROJECT":
       return {
         ...state,
-        projects: [...state.projects, action.project],
+        projects: [...state.projects, action.payload.project],
         activeForm: false,
         showError: false
       };
@@ -33,16 +34,22 @@ export function ProjectsReducer(state = initialState, action) {
       return {
         ...state,
         currentProject: state.projects.filter(
-          project => project.id === action.projectId
+          project => project._id === action.projectId
         )
       };
     case "DELETE_PROJECT":
       return {
         ...state,
         projects: state.projects.filter(
-          project => project.id !== action.projectId
+          project => project._id !== action.projectId
         )
       };
+    case "ERROR_PROJECT":
+      console.log(action.payload);
+      return {
+        ...state,
+        message: action.payload
+      }
     default:
       return state;
   }

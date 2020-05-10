@@ -1,15 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { deleteProject } from "../../redux/actions/projects/actions";
 import {
   deleteTask,
   changeStatusTask,
-  currentTask
+  currentTask,
+  getTasksByProjectId
 } from "../../redux/actions/tasks/actions";
 import ListTask from "../../components/tasks/ListTask";
 
 const ListTaskContainer = props => {
+
   if (props.currentProject != null) {
+
     const deleteProject = projectId => {
       props.deleteProject(projectId);
     };
@@ -53,7 +56,7 @@ const ListTaskContainer = props => {
      * Filter tasks by projectId
      */
     const tasksFilter = props.tasks.filter(
-      item => item.proyectId === project.id
+      item => item.proyectId === project._id
     );
 
     return (
@@ -73,17 +76,20 @@ const ListTaskContainer = props => {
 
 const mapStateToProps = state => {
   const { currentProject } = state.ProjectsReducer;
-  const { tasks } = state.TasksReducer;
+  const { tasks, currentTask } = state.TasksReducer;
   return {
     currentProject,
-    tasks
+    tasks,
+    currentTask
   };
 };
 
 const mapDispatchToProps = {
   deleteProject,
   deleteTask,
-  changeStatusTask
+  changeStatusTask,
+  currentTask,
+
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListTaskContainer);

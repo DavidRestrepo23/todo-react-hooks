@@ -273,8 +273,6 @@ aside  {
   color: var(--blanco);
 }
 
-
-
 .task-enter,
 .project-enter {
   opacity: 0;
@@ -349,4 +347,51 @@ aside  {
   position: absolute;
   right: 6px;
   top:12px
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem 3rem;
+  border-radius: 5px;
+  font-family: var(--headingFont);
+  font-weight: 600;
+  font-size: 1.8rem;
+  text-align: center;
+  width: 100%;
+}
+@media (min-width:768px) {
+  .alert {
+      width: auto;
+      top: 30px;
+      right: 10px;
+      left: auto;
+  }
+}
+ 
+.alert-ok {
+  background-color: rgb(109, 211, 109);
+  color: rgb(2,103,2);
+}
+ 
+.alert-error {
+  background-color: rgb(230, 78, 78);
+  color: var(--blanco);
+}
+
+.content-input-form {
+  padding-bottom: 25px;
+  position: relative;
+}
+
+.content-input-form small {
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  color: red;
+}
+
+.close {
+  color: #fff;
 }

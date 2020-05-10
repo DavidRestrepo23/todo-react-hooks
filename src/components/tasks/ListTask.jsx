@@ -15,25 +15,25 @@ const ListTask = props => {
               <p>Without Tasks</p>
             </li>
           ) : (
-            <TransitionGroup>
-              {tasksProjects.map((task, index) => (
-                <CSSTransition key={index} timeout={500} className="task">
-                  <Task
-                    task={task}
-                    deleteTask={deleteTask}
-                    handleChangeStatusTask={handleChangeStatusTask}
-                    handleSelectTask={handleSelectTask}
-                  />
-                </CSSTransition>
-              ))}
-            </TransitionGroup>
-          )
+              <TransitionGroup>
+                {tasksProjects.map((task, index) => (
+                  <CSSTransition key={index} timeout={500} className="task">
+                    <Task
+                      task={task}
+                      deleteTask={deleteTask}
+                      handleChangeStatusTask={handleChangeStatusTask}
+                      handleSelectTask={handleSelectTask}
+                    />
+                  </CSSTransition>
+                ))}
+              </TransitionGroup>
+            )
         ) : null}
       </ul>
 
       <button
         type="button"
-        onClick={e => props.deleteProject(props.project.id)}
+        onClick={e => props.deleteProject(props.project._id)}
         className="btn btn-delete"
       >
         Delete project
